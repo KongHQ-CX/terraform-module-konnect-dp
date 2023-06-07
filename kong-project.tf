@@ -15,23 +15,43 @@ module "kong" {
   service-monitor-namespace          = var.service-monitor-namespace
 }
 
+/*
+data "aws_eks_cluster" "kong-eks-cluster" {
+  name = "testantoine"
+}
+
+data "aws_eks_cluster_auth" "kong-eks-cluster" {
+  name = "testantoine"
+}
+
+provider "aws" {
+  region     = var.aws-region
+  access_key = var.aws-access-key
+  secret_key = var.aws-secret-key
+  token      = var.aws-token
+  profile    = var.aws-profile
+}
+*/
+
 provider "helm" {
   kubernetes {
     config_path = "~/.kube/config"
 
-    # host     = var.k8s-cluster-endpoint
-    # client_certificate     = file("~/.kube/client-cert.pem")
-    # client_key             = file("~/.kube/client-key.pem")
-    # cluster_ca_certificate = file("~/.kube/cluster-ca-cert.pem")
+    /*
+    host                   = data.aws_eks_cluster.kong-eks-cluster.endpoint
+    cluster_ca_certificate = base64decode(data.aws_eks_cluster.kong-eks-cluster.certificate_authority[0].data)
+    token                  = data.aws_eks_cluster_auth.kong-eks-cluster.token
+    */
   }
 }
 
 provider "kubernetes" {
   config_path    = "~/.kube/config"
-  config_context = "minikube"
+  # config_context = "minikube"
 
-  # host     = var.k8s-cluster-endpoint
-  # client_certificate     = file("~/.kube/client-cert.pem")
-  # client_key             = file("~/.kube/client-key.pem")
-   # cluster_ca_certificate = file("~/.kube/cluster-ca-cert.pem")
+  /*
+  host                   = data.aws_eks_cluster.kong-eks-cluster.endpoint
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.kong-eks-cluster.certificate_authority[0].data)
+  token                  = data.aws_eks_cluster_auth.kong-eks-cluster.token
+  */
 }

@@ -38,11 +38,6 @@ variable "service-monitor-namespace" {
   default = "kong"
 }
 
-variable "k8s-cluster-endpoint" {
-  type = string
-  default = ""
-}
-
 variable "cluster-control-plane" {
   type = string
   default = "cdd3ccbed2.eu.cp0.konghq.com"
@@ -52,3 +47,30 @@ variable "cluster-telemetry-endpoint" {
   type = string
   default = "cdd3ccbed2.eu.tp0.konghq.com"
 }
+
+/*
+variable "aws-region" {
+  type = string
+  default = ""
+}
+
+variable "aws-access-key" {
+  type = string
+  default = ""
+}
+
+variable "aws-secret-key" {
+  type = string
+  default = ""
+}
+
+variable "aws-token" {
+  type = string
+  default = ""
+}
+
+variable "aws-profile" {
+  type = string
+  default = ""
+}
+*/

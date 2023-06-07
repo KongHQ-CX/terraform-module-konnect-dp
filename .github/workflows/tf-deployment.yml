@@ -8,7 +8,12 @@ on:
   workflow_dispatch:
 
 env:
-  K8S_CLUSTER_ENDPOINT: ${{secrets.K8S_CLUSTER_ENDPOINT}} # K8s Cluster Endpoint where your Terraform module to be published
+  # AWS_REGION: ${{secrets.AWS_REGION}} # K8s Cluster Endpoint where your Terraform module to be published
+  # AWS_ACCESS_KEY: ${{secrets.AWS_ACCESS_KEY}} # K8s Cluster Endpoint where your Terraform module to be published
+  # AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY}} # K8s Cluster Endpoint where your Terraform module to be published
+  # AWS_SESSION_TOKEN: ${{secrets.AWS_SESSION_TOKEN}} # K8s Cluster Endpoint where your Terraform module to be published
+  # AWS_PROFILE: ${{secrets.AWS_PROFILE}} # K8s Cluster Endpoint where your Terraform module to be published
+
 
 jobs:
   deploy:
@@ -42,7 +47,13 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan -no-color -input=false -var cluster_endpoint=$K8S_CLUSTER_ENDPOINT
+        run: |
+          terraform plan -no-color -input=false
+            # -var aws-region=$AWS_REGION \
+            # -var aws-access-key=$AWS_ACCESS_KEY \
+            # -var aws-secret-key=$AWS_SECRET_KEY \
+            # -var aws-token=$AWS_SESSION_TOKEN \
+            # -var aws-profile=$AWS_PROFILE
         continue-on-error: true
 
       - uses: actions/github-script@v6
@@ -75,7 +86,13 @@ jobs:
 
       - name: Terraform Apply
         if: (github.ref == 'refs/heads/staging' || github.ref == 'refs/heads/main') && github.event_name == 'push'
-        run: terraform apply -auto-approve -input=false -var cluster_endpoint=$K8S_CLUSTER_ENDPOINT
+        run: |
+          terraform apply -auto-approve -input=false
+            # -var aws-region=$AWS_REGION \
+            # -var aws-access-key=$AWS_ACCESS_KEY \
+            # -var aws-secret-key=$AWS_SECRET_KEY \
+            # -var aws-token=$AWS_SESSION_TOKEN \
+            # -var aws-profile=$AWS_PROFILE
 
       # - name: Helm upgrade
       #   if: (github.ref == 'refs/heads/staging' || github.ref == 'refs/heads/main') && github.event_name == 'push'

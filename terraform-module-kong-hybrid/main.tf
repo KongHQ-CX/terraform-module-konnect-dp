@@ -57,13 +57,13 @@ resource "helm_release" "kong-enterprise-data-plane" {
   }
 
   depends_on = [
-    kubernetes_secret.kong-tls
+    kubernetes_secret.kong-cluster-cert
   ]
 }
 
-resource "kubernetes_secret" "kong-tls" {
+resource "kubernetes_secret" "kong-cluster-cert" {
   metadata {
-    name      = "kong-tls"
+    name      = "kong-cluster-cert"
     namespace = var.kong-namespace
 
     annotations = merge(var.default-annotations, var.additional-annotations)
