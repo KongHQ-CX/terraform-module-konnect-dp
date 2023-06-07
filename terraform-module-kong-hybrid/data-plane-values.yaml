@@ -66,6 +66,7 @@ ingressController:
 proxy:
   # Enable creating a Kubernetes service for the proxy
   enabled: true
+  # use type "LoadBalancer" for local testing
   type: ClusterIP
   # To specify annotations or labels for the proxy service, add them to the respective
   # "annotations" or "labels" dictionaries below.
@@ -74,6 +75,7 @@ proxy:
   http:
     # Enable plaintext HTTP listen for the proxy
     enabled: true
+    # use local port "9000" for local testing
     servicePort: 80
     containerPort: 8000
     # Additional listen parameters, e.g. "reuseport", "backlog=16384"
@@ -83,6 +85,7 @@ proxy:
   tls:
     # Enable HTTPS listen for the proxy
     enabled: true
+    # use local port "9443" for local testing
     servicePort: 443
     containerPort: 8443
     # Set a target port for the TLS port in proxy service
