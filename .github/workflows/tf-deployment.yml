@@ -21,21 +21,20 @@ jobs:
     #runs-on: [self-hosted, macOS]
     runs-on: ubuntu-latest
 
-    
     concurrency: # Override previous deployment if we start a new one
       group: ${{ github.workflow }}-${{ github.ref }}-terraform
       cancel-in-progress: true
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
+        uses: hashicorp/setup-terraform@v2
 
       - name: Terraform Format
         id: fmt
-        run: terraform fmt -check
+        run: terraform fmt -check -recursive
 
       - name: Terraform Init
         id: init
