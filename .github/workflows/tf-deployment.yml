@@ -3,7 +3,10 @@ name: Deployment of Terraform & Helm to staging or prod.
 on:
   push: # We do CD when pushing
     branches:
-     # - master
+     # - main
+  pull_request:
+    branches:
+     # - main
   
   workflow_dispatch:
 
