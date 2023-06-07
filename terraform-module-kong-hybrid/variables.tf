@@ -1,6 +1,6 @@
 variable "kong-image-tag" {
   type = string
-} 
+}
 
 variable "cluster-control-plane" {
   type = string
@@ -41,7 +41,6 @@ variable "kong-cluster-cert-path" {
 
 variable "default-labels" {
   type = map(any)
-
   default = {
     "app.kubernetes.io/managed-by" : "Terraform"
   }
@@ -49,13 +48,11 @@ variable "default-labels" {
 
 variable "additional-labels" {
   type = map(any)
-
   default = {}
 }
 
 variable "default-annotations" {
   type = map(any)
-
   default = {
     "app.kubernetes.io/managed-by" : "Terraform"
   }
@@ -63,7 +60,6 @@ variable "default-annotations" {
 
 variable "additional-annotations" {
   type = map(any)
-
   default = {}
 }
 

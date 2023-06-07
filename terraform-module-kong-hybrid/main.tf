@@ -73,7 +73,6 @@ resource "kubernetes_secret" "kong-cluster-cert" {
   data = {
     "tls.crt" = "${file(local.kong-tls-crt)}"
     "tls.key" = "${file(local.kong-tls-key)}"
-    
   }
 
   type = "kubernetes.io/tls"

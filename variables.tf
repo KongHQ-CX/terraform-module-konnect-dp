@@ -1,30 +1,30 @@
 variable "kong-image-tag" {
-  type = string
+  type    = string
   default = "3.3.0.0"
-} 
+}
 
 variable "kong-helm-version" {
-  type = string
+  type    = string
   default = "2.23.0"
 }
 
 variable "kong-tls-crt" {
-  type = string
+  type    = string
   default = "tls.crt"
 }
 
 variable "kong-tls-key" {
-  type = string
+  type    = string
   default = "tls.key"
 }
 
 variable "kong-cluster-cert-path" {
-  type = string
+  type    = string
   default = "./kong-cluster-cert"
 }
 
 variable "kong-namespace" {
-  type = string
+  type    = string
   default = "debugantoine"
 }
 
@@ -34,17 +34,17 @@ variable "service-monitor-enable" {
 }
 
 variable "service-monitor-namespace" {
-  type = string
+  type    = string
   default = "kong"
 }
 
 variable "cluster-control-plane" {
-  type = string
+  type    = string
   default = "cdd3ccbed2.eu.cp0.konghq.com"
 }
 
 variable "cluster-telemetry-endpoint" {
-  type = string
+  type    = string
   default = "cdd3ccbed2.eu.tp0.konghq.com"
 }
 
