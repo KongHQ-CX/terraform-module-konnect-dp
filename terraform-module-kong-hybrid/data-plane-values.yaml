@@ -1,0 +1,181 @@
+# Override namepsace for Kong chart resources. By default, the chart creates resources in the release namespace.
+# This may not be desirable when using this chart as a dependency.
+#namespace: "kong"
+
+# Specify Kong's Docker image and repository details here
+image:
+  #repository: kong
+  # tag: "2.7" - set by tf (main.tf)
+  # Kong Enterprise
+  repository: kong/kong-gateway
+  # tag: "2.7.0.0-alpine" - set by tf (main.tf)
+  #tag: "3.3"
+
+# Inject specified secrets as a volume in Kong Container at path /etc/secrets/{secret-name}/
+secretVolumes:
+- kong-cluster-cert
+
+# -----------------------------------------------------------------------------
+# Kong parameters
+# -----------------------------------------------------------------------------
+
+# Specify Kong configuration
+# This chart takes all entries defined under `.env` and transforms them into into `KONG_*`
+# environment variables for Kong containers.
+# Their names here should match the names used in https://github.com/Kong/kong/blob/master/kong.conf.default
+# See https://docs.konghq.com/latest/configuration also for additional details
+# Values here take precedence over values from other sections of values.yaml,
+# e.g. setting pg_user here will override the value normally set when postgresql.enabled
+# is set below. In general, you should not set values here if they are set elsewhere.
+env:
+  role: data_plane
+  database: "off"
+  cluster_mtls: pki
+  # cluster_control_plane: dns_prefix.eu.cp0.konghq.com:443
+  # cluster_server_name: dns_prefix.eu.cp0.konghq.com
+  # cluster_telemetry_endpoint: dns_prefix.eu.tp0.konghq.com:443
+  # cluster_telemetry_server_name: dns_prefix.eu.tp0.konghq.com
+  cluster_cert: /etc/secrets/kong-cluster-cert/tls.crt
+  cluster_cert_key: /etc/secrets/kong-cluster-cert/tls.key
+  lua_ssl_trusted_certificate: system
+  konnect_mode: "on"
+  vitals: "off"
+
+  nginx_worker_processes: "auto"
+
+  # proxy_access_log: /dev/stdout
+  # proxy_error_log: /dev/stderr
+  # prefix: /kong_prefix/
+  # proxy_listen: "0.0.0.0:8000 proxy_protocol, 0.0.0.0:8443 ssl proxy_protocol"
+  # trusted_ips: "0.0.0.0/0,::/0"
+  # real_ip_header: proxy_protocol
+  # ssl_cert: /etc/secrets/kong-tls/tls.crt
+  # ssl_cert_key: /etc/secrets/kong-tls/tls.key
+
+
+# Set admin.enabled true to issue kong admin api and manager certificate with cert-manager
+admin:
+  enabled: false
+
+# Kong Ingress Controller's primary purpose is to satisfy Ingress resources
+ingressController:
+  enabled: false
+  installCRDs: false
+
+# Specify Kong proxy service configuration
+proxy:
+  # Enable creating a Kubernetes service for the proxy
+  enabled: true
+  type: ClusterIP
+  # To specify annotations or labels for the proxy service, add them to the respective
+  # "annotations" or "labels" dictionaries below.
+  annotations: {}
+  
+  http:
+    # Enable plaintext HTTP listen for the proxy
+    enabled: true
+    servicePort: 80
+    containerPort: 8000
+    # Additional listen parameters, e.g. "reuseport", "backlog=16384"
+    parameters:
+      - reuseport
+
+  tls:
+    # Enable HTTPS listen for the proxy
+    enabled: true
+    servicePort: 443
+    containerPort: 8443
+    # Set a target port for the TLS port in proxy service
+    # overrideServiceTargetPort: 8000
+    # Additional listen parameters, e.g. "reuseport", "backlog=16384"
+    parameters:
+    - http2
+  
+  # Used as selector label if we enable service monitor via Kong Helm chart
+  labels:
+    enable-metrics: "true"
+
+serviceMonitor:
+  # Specifies whether ServiceMonitor for Prometheus operator should be created
+  # If you wish to gather metrics from a Kong instance with the proxy disabled (such as a hybrid control plane), see:
+  # https://github.com/Kong/charts/blob/main/charts/kong/README.md#prometheus-operator-integration
+  enabled: false
+  # interval: 10s
+  # Specifies namespace, where ServiceMonitor should be installed
+  # namespace: monitoring
+  # labels:
+  #   foo: bar
+  # targetLabels:
+  #   - foo
+
+  # honorLabels: false
+  # metricRelabelings: []
+  
+# update strategy
+updateStrategy: {}
+  # type: RollingUpdate
+  # rollingUpdate:
+  #   maxSurge: "100%"
+  #   maxUnavailable: "0%
+
+# readinessProbe for Kong pods
+readinessProbe:
+  httpGet:
+    path: "/status"
+    port: status
+    scheme: HTTP
+  initialDelaySeconds: 5
+  timeoutSeconds: 5
+  periodSeconds: 10
+  successThreshold: 1
+  failureThreshold: 3
+
+# livenessProbe for Kong pods
+livenessProbe:
+  httpGet:
+    path: "/status"
+    port: status
+    scheme: HTTP
+  initialDelaySeconds: 5
+  timeoutSeconds: 5
+  periodSeconds: 10
+  successThreshold: 1
+  failureThreshold: 3
+
+# Enable autoscaling using HorizontalPodAutoscaler
+# When configuring an HPA, you must set resource requests on all containers via
+# "resources" and, if using the controller, "ingressController.resources" in values.yaml
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 5
+  ## targetCPUUtilizationPercentage only used if the cluster doesn't support autoscaling/v2beta
+  targetCPUUtilizationPercentage:
+  ## Otherwise for clusters that do support autoscaling/v2beta, use metrics
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 80
+
+# Kong Pod Disruption Budget
+podDisruptionBudget:
+  enabled: true
+  # Uncomment only one of the following when enabled is set to true
+  # maxUnavailable: "50%"
+  minAvailable: "50%"
+
+# Affinity for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+            - key: app
+              operator: In
+              values:
+                - kong-enterprise-data-plane-kong
+        topologyKey: "kubernetes.io/hostname"
