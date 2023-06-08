@@ -23,7 +23,9 @@ jobs:
     name: Run terraform & helm
     #runs-on: [self-hosted, macOS]
     runs-on: ubuntu-latest
-    permissions: write-all
+    permissions:
+      contents: read
+      pull-requests: write
 
     concurrency: # Override previous deployment if we start a new one
       group: ${{ github.workflow }}-${{ github.ref }}-terraform
