@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 env:
-  TERRAFORM_DEPLOY_RUN: "false"
+  TERRAFORM_DEPLOY_RUN: ${{ false }}
   # TERRAFORM_MODULE_DIR: ${CI_PROJECT_DIR} # The path to your Terraform module
   # TERRAFORM_MODULE_NAME: ${CI_PROJECT_NAME} # The name of your Terraform module
   # TERRAFORM_MODULE_SYSTEM: local # The system or provider your Terraform module targets (ex. local, aws, google)
@@ -33,7 +33,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Deploy Terraform Module
-        if: env.TERRAFORM_DEPLOY_RUN == "true"
+        if: ${{ env.TERRAFORM_DEPLOY_RUN == true }}
         run: |
           TERRAFORM_MODULE_NAME=$(echo "${TERRAFORM_MODULE_NAME}" | tr " _" -) # module-name must not have spaces or underscores, so translate them to hyphens
           tar -vczf ${TERRAFORM_MODULE_NAME}-${TERRAFORM_MODULE_SYSTEM}-${TERRAFORM_MODULE_VERSION}.tgz -C ${TERRAFORM_MODULE_DIR} --exclude=./.git .
