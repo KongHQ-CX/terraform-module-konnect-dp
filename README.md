@@ -21,6 +21,7 @@ The following fields are available for module configuration, with descriptions:
 Please use your own data plane values file for the Kong Helm Chart. You can use the file provided by the Konnect UI and the one provided as samples (and in the examples). Please make sure to fill the following field 
 
 | Key     | Description | Data Type  | Default Value | Require |
+| ------- | ----------- | ---------- | ------------- | ------- |
 | cluster_control_plane | The cluster control plane endpoint as defined in Konnect "xxxxxx.eu.cp0.konghq.com:443" | string | null | **true** |
 | cluster_server_name |  The cluster control server name as defined in Konnect "xxxxxx.eu.cp0.konghq.com" | string | null | **true** |
 | cluster_telemetry_endpoint |  The cluster telemetry endpoint as defined in Konnect "xxxxxx.eu.tp0.konghq.com:443" | string | null | **true** |
