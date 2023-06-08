@@ -3,10 +3,10 @@ name: Deployment of Terraform & Helm to staging or prod.
 on:
   push: # We do CD when pushing
     branches:
-     # - main
+     - main
   pull_request:
     branches:
-     # - main
+     - staging
   
   workflow_dispatch:
 
@@ -23,7 +23,7 @@ jobs:
     name: Run terraform & helm
     #runs-on: [self-hosted, macOS]
     runs-on: ubuntu-latest
-    permissions:
+    permissions: # write-all
       contents: read
       pull-requests: write
 
