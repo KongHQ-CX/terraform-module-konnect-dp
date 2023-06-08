@@ -1,7 +1,7 @@
 ### Kong Project ###
 module "kong" {
   source  = "KongHQ-CX/konnect-dp/module"
-  version = "0.0.1"
+  version = "0.0.2"
 
   kong-image-tag             = var.kong-image-tag
   cluster-control-plane      = var.cluster-control-plane
