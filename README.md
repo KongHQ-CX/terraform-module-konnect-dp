@@ -43,11 +43,11 @@ You can also declare these variables directly in your CICD pipeline in the ```tf
 ## Module Deployment
 
 You can either use Github action from the file ```tf-deployment.yml`` or use following command line:
-- **terraform init**: the AWS region
+- **terraform init**: the terraform init command initializes a working directory containing Terraform configuration files.
 
-- **terraform plan**: the AWS region
+- **terraform plan**: the terraform plan command creates an execution plan, which lets you preview the changes that Terraform plans to make to your infrastructure.
 
-- **terraform apply -auto-approve**: the AWS region
+- **terraform apply -auto-approve**: the terraform apply command executes the actions proposed in a Terraform plan to create, update, or destroy infrastructure.
 
 The require variables should be declared in:
 - the ```variables.tf```
