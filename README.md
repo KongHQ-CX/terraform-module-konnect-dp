@@ -15,10 +15,16 @@ The following fields are available for module configuration, with descriptions:
 | kong-tls-key | The name of the private key file for the certificate to establish mTLS communication between DP and Konnect | string | "tls.key" | false |
 | kong-cluster-cert-path | The relative path to the 2 certificates files declared above | string | null | **true** |
 | kong-namespace | The namespace where the Kong DP will be deployed | string | null | **true** |
-| service-monitor-enable | The boolean to enable or not the service monitor from the Kong Helm Chart | boolean | "false" | false |
-| service-monitor-namespace |  The namespace where the Prometheus Service Monitor will be deployed | string | null | false |
-| cluster-control-plane |  The cluster control plane endpoint as defined in Konnect "xxxxxx.eu.cp0.konghq.com" | string | null | **true** |
-| cluster-telemetry-endpoint |  The cluster telenetry endpoint as defined in Konnect "xxxxxx.eu.tp0.konghq.com" | string | null | **true** |
+| kong-values-file |  The local data plane values files is you prefer local control | string | null | **true** |
+
+### Kong Data Plane Value
+Please use your own data plane values file for the Kong Helm Chart. You can use the file provided by the Konnect UI and the one provided as samples (and in the examples). Please make sure to fill the following field 
+
+| Key     | Description | Data Type  | Default Value | Require |
+| cluster_control_plane | The cluster control plane endpoint as defined in Konnect "xxxxxx.eu.cp0.konghq.com:443" | string | null | **true** |
+| cluster_server_name |  The cluster control server name as defined in Konnect "xxxxxx.eu.cp0.konghq.com" | string | null | **true** |
+| cluster_telemetry_endpoint |  The cluster telemetry endpoint as defined in Konnect "xxxxxx.eu.tp0.konghq.com:443" | string | null | **true** |
+| cluster_telemetry_server_name |  The cluster telemetry server name as defined in Konnect "xxxxxx.eu.tp0.konghq.com" | string | null | **true** |
 
 ### Provider
 

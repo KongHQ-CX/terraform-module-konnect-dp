@@ -2,14 +2,6 @@ variable "kong-image-tag" {
   type = string
 }
 
-variable "cluster-control-plane" {
-  type = string
-}
-
-variable "cluster-telemetry-endpoint" {
-  type = string
-}
-
 variable "kong-helm-version" {
   type = string
   default = "2.23.0"
@@ -25,14 +17,9 @@ variable "kong-tls-key" {
   default = "tls.key"
 }
 
-variable "service-monitor-enable" {
-  type    = bool
-  default = false
-}
-
-variable "service-monitor-namespace" {
-  type = string
-  default = ""
+variable "kong-values-file" {
+  type    = string
+  default = "noexist.yaml"
 }
 
 variable "kong-namespace" {

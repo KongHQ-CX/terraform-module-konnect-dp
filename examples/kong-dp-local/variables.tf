@@ -13,26 +13,6 @@ variable "kong-namespace" {
   default = "kong"
 }
 
-variable "cluster-control-plane" {
-  type    = string
-  default = "xxxxxx.eu.cp0.konghq.com"
-}
-
-variable "cluster-telemetry-endpoint" {
-  type    = string
-  default = "xxxxxx.eu.tp0.konghq.com"
-}
-
-variable "service-monitor-enable" {
-  type    = bool
-  default = true
-}
-
-variable "service-monitor-namespace" {
-  type = string
-  default = "monitoring"
-}
-
 /*
 variable "aws-region" {
   type = string

@@ -1,22 +1,21 @@
 ### Kong Project ###
 module "kong" {
   source  = "KongHQ-CX/konnect-dp/module"
-  version = "0.0.2"
+  version = "0.0.3"
 
   kong-image-tag             = var.kong-image-tag
-  cluster-control-plane      = var.cluster-control-plane
-  cluster-telemetry-endpoint = var.cluster-telemetry-endpoint
   kong-cluster-cert-path     = var.kong-cluster-cert-path
   kong-namespace             = var.kong-namespace
+  kong-values-file           = "${path.module}/data-plane-values.yaml"
 }
 
 /*
 data "aws_eks_cluster" "kong-eks-cluster" {
-  name = "testantoine"
+  name = "$cluster_name"
 }
 
 data "aws_eks_cluster_auth" "kong-eks-cluster" {
-  name = "testantoine"
+  name = "$cluster_name"
 }
 
 provider "aws" {
