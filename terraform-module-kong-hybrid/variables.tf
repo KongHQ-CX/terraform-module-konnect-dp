@@ -12,14 +12,17 @@ variable "cluster-telemetry-endpoint" {
 
 variable "kong-helm-version" {
   type = string
+  default = "2.23.0"
 }
 
 variable "kong-tls-crt" {
   type = string
+  default = "tls.crt"
 }
 
 variable "kong-tls-key" {
   type = string
+  default = "tls.key"
 }
 
 variable "service-monitor-enable" {
@@ -29,6 +32,7 @@ variable "service-monitor-enable" {
 
 variable "service-monitor-namespace" {
   type = string
+  default = ""
 }
 
 variable "kong-namespace" {
