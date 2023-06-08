@@ -1,6 +1,6 @@
 # Change Log
 
-## [1.0] - 2023-06-08
+## [0.0.1] - 2023-06-08
 
 ### Added
 
@@ -10,3 +10,15 @@
 
 ### Fixed
 
+
+## [0.0.2] - 2023-06-08
+
+### Added
+
+- Second public release.
+
+### Changed
+
+- New examples using registry
+
+### Fixed
