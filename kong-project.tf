@@ -1,6 +1,6 @@
 ### Kong Project ###
 module "kong" {
-  source = "./terraform-module-kong-hybrid"
+  source = "./terraform-module-konnect-dp"
   # version = "3.1.2" // first commit
 
   kong-image-tag             = var.kong-image-tag
