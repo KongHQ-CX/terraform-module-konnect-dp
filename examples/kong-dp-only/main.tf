@@ -1,7 +1,7 @@
 ### Kong Project ###
 module "kong" {
-  source = "./terraform-module-konnect-dp"
-  # version = "3.1.2" // first commit
+  source = "../.."
+  # version = "1.0.0" // first commit
 
   kong-image-tag             = var.kong-image-tag
   cluster-control-plane      = var.cluster-control-plane

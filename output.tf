@@ -1,4 +1,4 @@
-output "kong_deployment" {
-  value       = module.kong.helm_deployment.status
-  description = "The state of the kong module deployment"
+output "helm_deployment" {
+  value       = helm_release.kong-enterprise-data-plane
+  description = "The state of the helm deployment"
 }

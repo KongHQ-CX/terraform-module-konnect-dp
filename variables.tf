@@ -1,51 +1,69 @@
 variable "kong-image-tag" {
-  type    = string
-  default = "3.3.0.0"
-}
-
-variable "kong-cluster-cert-path" {
-  type    = string
-  default = "./kong-cluster-cert"
-}
-
-variable "kong-namespace" {
-  type    = string
-  default = "kong"
+  type = string
 }
 
 variable "cluster-control-plane" {
-  type    = string
-  default = "xxxxxx.eu.cp0.konghq.com"
+  type = string
 }
 
 variable "cluster-telemetry-endpoint" {
-  type    = string
-  default = "xxxxxx.eu.tp0.konghq.com"
+  type = string
 }
 
-/*
-variable "aws-region" {
+variable "kong-helm-version" {
+  type = string
+  default = "2.23.0"
+}
+
+variable "kong-tls-crt" {
+  type = string
+  default = "tls.crt"
+}
+
+variable "kong-tls-key" {
+  type = string
+  default = "tls.key"
+}
+
+variable "service-monitor-enable" {
+  type    = bool
+  default = false
+}
+
+variable "service-monitor-namespace" {
   type = string
   default = ""
 }
 
-variable "aws-access-key" {
+variable "kong-namespace" {
   type = string
-  default = ""
 }
 
-variable "aws-secret-key" {
+variable "kong-cluster-cert-path" {
   type = string
-  default = ""
 }
 
-variable "aws-token" {
-  type = string
-  default = ""
+variable "default-labels" {
+  type = map(any)
+  default = {
+    "app.kubernetes.io/managed-by" : "Terraform"
+  }
 }
 
-variable "aws-profile" {
-  type = string
-  default = ""
+variable "additional-labels" {
+  type = map(any)
+  default = {}
 }
-*/
+
+variable "default-annotations" {
+  type = map(any)
+  default = {
+    "app.kubernetes.io/managed-by" : "Terraform"
+  }
+}
+
+variable "additional-annotations" {
+  type = map(any)
+  default = {}
+}
+
