@@ -10,6 +10,7 @@ The following fields are available for module configuration, with descriptions:
 | Key     | Description | Data Type  | Default Value | Require |
 | ------- | ----------- | ---------- | ------------- | ------- |
 | kong-image-tag | The kong image used by the data plane | string | null | **true** |
+| kong-image-repository | Image repository to pull the Kong image from. | string | "kong/kong-gateway" | false |
 | kong-helm-version | The helm version | string | "2.23.0" | false |
 | kong-tls-crt | The name of the signed certificate file to establish mTLS communication between DP and Konnect | string | "tls.crt" | false |
 | kong-tls-key | The name of the private key file for the certificate to establish mTLS communication between DP and Konnect | string | "tls.key" | false |

@@ -2,6 +2,12 @@ variable "kong-image-tag" {
   type = string
 }
 
+variable "kong-image-repository" {
+  type        = string
+  description = "Image repository to pull the Kong image from. TERRAFORM ASSUMES YOUR RUNNER/SERVER ALREADY HAS `PULL` PERMISSION ON THE IMAGE AND/OR REPOSITORY."
+  default     = "kong/kong-gateway"
+}
+
 variable "kong-helm-version" {
   type = string
   default = "2.23.0"

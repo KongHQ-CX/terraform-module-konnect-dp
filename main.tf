@@ -21,6 +21,11 @@ resource "helm_release" "kong-enterprise-data-plane" {
     value = var.kong-image-tag
   }
 
+  set {
+    name  = "image.repository"
+    value = var.kong-image-repository
+  }
+
   depends_on = [
     kubernetes_secret.kong-cluster-cert
   ]
